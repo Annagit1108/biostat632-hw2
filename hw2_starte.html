@@ -1796,14 +1796,44 @@ details</li>
 </ul>
 <p>In order to show the help file in the knitted Rmd, install the
 package Rd2md and use this code block:</p>
-<pre class="r"><code>library(Rd2md)</code></pre>
-<pre><code>## Warning: package &#39;Rd2md&#39; was built under R version 4.4.2</code></pre>
-<pre class="r"><code>Rd2markdown(rdfile = &quot;man/plot_cp.Rd&quot;, outfile = &quot;plot_cp.md&quot;)</code></pre>
-<pre><code>## Warning in Rd2markdown(rdfile = &quot;man/plot_cp.Rd&quot;, outfile = &quot;plot_cp.md&quot;): &#39;Rd2markdown&#39; is deprecated.
-## Use &#39;as_markdown&#39; instead.
-## See help(&quot;Deprecated&quot;) and help(&quot;Rd2md-deprecated&quot;).</code></pre>
-<pre class="r"><code>help(plot_cp)</code></pre>
-<pre><code>## ℹ Rendering development documentation for &quot;plot_cp&quot;</code></pre>
+<p>#```{r}</p>
+</div>
+<div id="plot-mcpr-data-and-estimates" class="section level1">
+<h1>Plot mCPR data and estimates</h1>
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>Plot mCPR data and estimates</p>
+</div>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<pre class="r"><code>plot_cp(dat, est, iso_code, CI = 95)</code></pre>
+</div>
+<div id="arguments" class="section level2">
+<h2>Arguments</h2>
+<ul>
+<li><code>dat</code>: tibble which contains mCPR observations. Columns:
+iso, year, cp</li>
+<li><code>est</code>: tibble which contains mCPR estimates. Columns:
+“Country or area”, iso, Year, Median, U95,L95</li>
+<li><code>iso_code</code>: Numeric. The ISO code of the country for
+which to generate the plot.</li>
+<li><code>CI</code>: confidence intervals to be plotted. Options can be:
+80, 95, or NA (no CI plotted)</li>
+</ul>
+</div>
+<div id="value" class="section level2">
+<h2>Value</h2>
+<p>A ggplot object showing modern contraceptive use over time.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<pre class="r"><code>Load data and generate plot for Afghanistan (ISO code 4) with 95% CI
+
+plot_cp(dat, est, iso_code = 4, CI = 95)
+
+# Generate plot for Kenya (ISO code 404) with 80% CI
+plot_cp(dat, est, iso_code = 404, CI = 80)</code></pre>
+</div>
 </div>
 <div id="exercise-3-github" class="section level1">
 <h1>Exercise 3: GitHub</h1>
@@ -1812,7 +1842,7 @@ Commit and push your package files, Rmd and knitted html to your repo.
 Paste the link to your GitHub repo below.</p>
 <p>Note that in order to earn full credits, your GitHub repo commit
 history should show at least two commits.</p>
-<p>Paste your link here… <a href="https://github.com/Annagit1108/biostat632-homework2/tree/main" class="uri">https://github.com/Annagit1108/biostat632-homework2/tree/main</a></p>
+<p>Paste your link here… <a href="https://github.com/Annagit1108/biostat632-hw2" class="uri">https://github.com/Annagit1108/biostat632-hw2</a></p>
 </div>
 
 

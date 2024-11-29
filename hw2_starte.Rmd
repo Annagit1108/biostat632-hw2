@@ -74,7 +74,9 @@ Document the arguments and output of plot_cp. To do that, add a helpfile (.Rd fi
 
 In order to show the help file in the knitted Rmd, install the package Rd2md and use this code block:
 
-```{r}
+#```{r}
+```{r, child="plot_cp.md"}
+
 library(Rd2md)
 Rd2markdown(rdfile = "man/plot_cp.Rd", outfile = "plot_cp.md")
 help(plot_cp)
