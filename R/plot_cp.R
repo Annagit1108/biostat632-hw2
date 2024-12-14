@@ -15,27 +15,29 @@
 #' plot_cp(dat, est, iso_code = 404, CI = 80)
 #'
 plot_cp <- function(dat, est, iso_code, CI = 95) {
-  dat_path <- system.file("data", "contraceptive_use.csv", package = "hw2plot")
-  dat <- read_csv(dat_path)
+  if (!("iso" %in% names(dat)) || !("iso" %in% names(est))) {
+    stop("Input data file dat and estimates file est must contain variable iso.")
+  }
 
-  # Load 'estimated_use.csv' from the data/ folder
-  est_path <- system.file("data", "est.csv", package = "hw2plot")
-  est <- read_csv(est_path)
+  if (!("year" %in% names(dat)) || !("cp" %in% names(dat))) {
+    stop("Input data file dat must contain variable year and cp.")
+  }
 
-  # Merge datasets: Prepare observed data
-  dat <- dat %>%
-    filter(is_in_union == "Y") %>%
-    mutate(
-      ref_time = (start_date + end_date) / 2,
-      cp = contraceptive_use_modern * 100
-    ) %>%
-    select(division_numeric_code, ref_time, cp)
+  # Check that 'contraceptive_use_modern' is numeric
+  if (!is.numeric(dat$cp)) {
+    stop("Input cp in data file dat must be numeric.")
+  }
+
+  # Check that CI is one of 80, 95, or NA
+  if (!CI %in% c(80, 95, NA)) {
+    stop("CI must be 80, 95, or NA.")
+  }
 
   est_filtered <- est %>% filter(iso == iso_code)
+
   # Remove rows with missing values (NA) or invalid data
   observed_filtered <- dat %>%
-    filter(division_numeric_code == iso_code) %>%
-    filter(!is.na(ref_time) & !is.na(cp))
+    filter(iso == iso_code)
 
   # Base plot
   p <- ggplot(est_filtered, aes(x = Year, y = Median)) +
@@ -60,7 +62,7 @@ plot_cp <- function(dat, est, iso_code, CI = 95) {
     p <- p +
       geom_point(
         data = observed_filtered,
-        aes(x = ref_time, y = cp)
+        aes(x = year, y = cp)
       )
   }
 
